@@ -41,28 +41,61 @@ namespace TheCover
                 var pos = new Point(m.LParam.ToInt32());
                 pos = PointToClient(pos);
 
-                if (pos.X <= cGrip && pos.Y <= cGrip)
-                {
-                    m.Result = (IntPtr)HTTOPLEFT;
+                if (IsDownOnOverridePosition(ref m, pos, clientHeight, clientWidth))
                     return;
-                }
-                else if (pos.X >= clientWidth - cGrip && pos.Y >= clientHeight - cGrip)
-                {
-                    m.Result = (IntPtr)HTBOTTOMRIGHT;
-                    return;
-                }
-                else if (pos.X >= clientWidth - cGrip && pos.Y <= cGrip)
-                {
-                    m.Result = (IntPtr)HTTOPRIGHT;
-                    return;
-                }
-                else if (pos.X <= cGrip && pos.Y >= clientHeight - cGrip)
-                {
-                    m.Result = (IntPtr)HTBOTTOMLEFT;
-                    return;
-                }
             }
             base.WndProc(ref m);
+        }
+
+        private bool IsDownOnOverridePosition(ref Message m, Point pos, int clientHeight, int clientWidth)
+        {
+            if (IsOnTheTop(pos))
+            {
+                if (IsOnTheLeft(pos))
+                {
+                    m.Result = (IntPtr)HTTOPLEFT;
+                    return true;
+                }
+                else if (IsOnTheRight(pos, clientHeight))
+                {
+                    m.Result = (IntPtr)HTTOPRIGHT;
+                    return true;
+                }
+            }
+            else if (IsOnTheBottom(pos, clientHeight))
+            {
+                if (IsOnTheLeft(pos))
+                {
+                    m.Result = (IntPtr)HTBOTTOMLEFT;
+                    return true;
+                }
+                else if (IsOnTheRight(pos, clientWidth))
+                {
+                    m.Result = (IntPtr)HTBOTTOMRIGHT;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool IsOnTheRight(Point pos, int clientWidth)
+        {
+            return pos.X >= clientWidth - cGrip;
+        }
+
+        private static bool IsOnTheBottom(Point pos, int clientHeight)
+        {
+            return pos.Y >= clientHeight - cGrip;
+        }
+
+        private static bool IsOnTheTop(Point pos)
+        {
+            return pos.Y <= cGrip;
+        }
+
+        private static bool IsOnTheLeft(Point pos)
+        {
+            return pos.X <= cGrip;
         }
     }
 }
