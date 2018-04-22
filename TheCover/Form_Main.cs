@@ -65,6 +65,11 @@ namespace TheCover
                     m.Result = (IntPtr)HTTOPRIGHT;
                     return true;
                 }
+                else
+                {
+                    m.Result = (IntPtr)HTTOP;
+                    return true;
+                }
             }
             else if (IsOnTheBottom(pos, clientHeight))
             {
@@ -78,6 +83,21 @@ namespace TheCover
                     m.Result = (IntPtr)HTBOTTOMRIGHT;
                     return true;
                 }
+                else
+                {
+                    m.Result = (IntPtr)HTBOTTOM;
+                    return true;
+                }
+            }
+            else if (IsOnTheLeft(pos))
+            {
+                m.Result = (IntPtr)HTLEFT;
+                return true;
+            }
+            else if (IsOnTheRight(pos, clientWidth))
+            {
+                m.Result = (IntPtr)HTRIGHT;
+                return true;
             }
             return false;
         }
