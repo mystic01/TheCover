@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheCover", "TheCover\TheCover.csproj", "{D04F9DBF-1FCB-43C3-AB65-FEA9930F4FC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheCoverTests", "TheCoverTests\TheCoverTests.csproj", "{BD3B0523-AC92-46A7-8AE8-D30842544604}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D04F9DBF-1FCB-43C3-AB65-FEA9930F4FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D04F9DBF-1FCB-43C3-AB65-FEA9930F4FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D04F9DBF-1FCB-43C3-AB65-FEA9930F4FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D04F9DBF-1FCB-43C3-AB65-FEA9930F4FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3B0523-AC92-46A7-8AE8-D30842544604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3B0523-AC92-46A7-8AE8-D30842544604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3B0523-AC92-46A7-8AE8-D30842544604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3B0523-AC92-46A7-8AE8-D30842544604}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
