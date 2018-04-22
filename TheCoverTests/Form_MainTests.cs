@@ -11,6 +11,8 @@ namespace TheCover.Tests
         [Test]
         [TestCase(3, 3, Form_Main.HTTOPLEFT, TestName = "WndProcTest_MouseDownOnTopLeft_ReturnHTTOPLEFT")]
         [TestCase(97, 97, Form_Main.HTBOTTOMRIGHT, TestName = "WndProcTest_MouseDownOnBottomRight_ReturnHTBOTTOMRIGHT")]
+        [TestCase(97, 3, Form_Main.HTTOPRIGHT, TestName = "WndProcTest_MouseDownOnTopRight_ReturnHTTOPRIGHT")]
+        [TestCase(3, 97, Form_Main.HTBOTTOMLEFT, TestName = "WndProcTest_MouseDownOnBottomLeft_ReturnHTBOTTOMLEFT")]
         public void WndProcTest_WhenTheMouseDownOnSomewhere_Return_HT(int xPoint, int yPoint,
             int assertResult)
         {
@@ -20,13 +22,13 @@ namespace TheCover.Tests
             var mouseMsg = new Message
             {
                 Msg = Form_Main.WM_NCHITTEST,
-                LParam = (IntPtr) (xPoint | (yPoint << 16)),
+                LParam = (IntPtr)(xPoint | (yPoint << 16)),
             };
             mouseMsg.Msg = Form_Main.WM_NCHITTEST;
 
             target.WncProcForUnitTest(ref mouseMsg);
 
-            Assert.AreEqual(assertResult, (int) mouseMsg.Result);
+            Assert.AreEqual(assertResult, (int)mouseMsg.Result);
         }
     }
 
