@@ -25,6 +25,25 @@ namespace TheCover.Tests
 
             Assert.AreEqual(Form_Main.HTTOPLEFT, (int)mouseMsg.Result);
         }
+
+        [TestMethod()]
+        public void WndProcTest_WhenTheMouseDownOnTheRightBottomCorner_Return_HTBOTTOMRIGHTj()
+        {
+            var target = new Form_MainStub();
+            target.StartPosition = FormStartPosition.Manual;
+            var xPoint = target.Width - 3;
+            var yPoint = target.Height - 3;
+            var mouseMsg = new Message
+            {
+                Msg = Form_Main.WM_NCHITTEST,
+                LParam = (IntPtr)((xPoint << 16) | yPoint),
+            };
+            mouseMsg.Msg = Form_Main.WM_NCHITTEST;
+
+            target.WncProcForUnitTest(ref mouseMsg);
+
+            Assert.AreEqual(Form_Main.HTBOTTOMRIGHT, (int)mouseMsg.Result);
+        }
     }
 
     public class Form_MainStub : Form_Main
