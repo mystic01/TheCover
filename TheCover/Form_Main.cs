@@ -40,6 +40,12 @@ namespace TheCover
                     m.Result = (IntPtr) HTTOPLEFT;
                     return;
                 }
+                else if (pos.X >= ClientSize.Width - cGrip && pos.Y >= ClientSize.Height - cGrip)
+                {
+                    m.Result = (IntPtr) HTBOTTOMRIGHT;
+                    return;
+                }
+
                 //if (pos.Y < cCaption)
                 //{
                 //    m.Result = (IntPtr)2;  // HTCAPTION

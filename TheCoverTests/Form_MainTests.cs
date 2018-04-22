@@ -17,7 +17,7 @@ namespace TheCover.Tests
             var mouseMsg = new Message
             {
                 Msg = Form_Main.WM_NCHITTEST,
-                LParam = (IntPtr)((xPoint << 16) | yPoint),
+                LParam = (IntPtr)(xPoint | (yPoint << 16)),
             };
             mouseMsg.Msg = Form_Main.WM_NCHITTEST;
 
@@ -27,7 +27,7 @@ namespace TheCover.Tests
         }
 
         [TestMethod()]
-        public void WndProcTest_WhenTheMouseDownOnTheRightBottomCorner_Return_HTBOTTOMRIGHTj()
+        public void WndProcTest_WhenTheMouseDownOnTheRightBottomCorner_Return_HTBOTTOMRIGHT()
         {
             var target = new Form_MainStub();
             target.StartPosition = FormStartPosition.Manual;
@@ -36,7 +36,7 @@ namespace TheCover.Tests
             var mouseMsg = new Message
             {
                 Msg = Form_Main.WM_NCHITTEST,
-                LParam = (IntPtr)((xPoint << 16) | yPoint),
+                LParam = (IntPtr)(xPoint | (yPoint << 16)),
             };
             mouseMsg.Msg = Form_Main.WM_NCHITTEST;
 
