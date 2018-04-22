@@ -25,6 +25,7 @@ namespace TheCover.Tests
 
             target.WncProcForUnitTest(ref mouseMsg);
 
+
             Assert.AreEqual(HTBOTTOMRIGHT, mouseMsg.Result);
         }
     }
