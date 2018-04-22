@@ -18,6 +18,7 @@ namespace TheCover
         private const int cCaption = 32;   // Caption bar height;
 
         public static readonly int WM_NCHITTEST = 0x84;
+        public const int HTCAPTION = 2;
         public const int HTLEFT = 10;
         public const int HTRIGHT = 11;
         public const int HTTOP = 12;
@@ -29,10 +30,10 @@ namespace TheCover
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var rc = new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
+            //var rc = new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
             //ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor, rc);
-            rc = new Rectangle(0, 0, this.ClientSize.Width, cCaption);
-            e.Graphics.FillRectangle(Brushes.DarkBlue, rc);
+            //rc = new Rectangle(0, 0, this.ClientSize.Width, cCaption);
+            //e.Graphics.FillRectangle(Brushes.DarkBlue, rc);
         }
 
         protected override void WndProc(ref Message m)
@@ -45,13 +46,13 @@ namespace TheCover
                 var pos = new Point(m.LParam.ToInt32());
                 pos = PointToClient(pos);
 
-                if (IsDownOnOverridePosition(ref m, pos, clientHeight, clientWidth))
+                if (IsDownOnOverridePosition(ref m, pos, clientWidth, clientHeight))
                     return;
             }
             base.WndProc(ref m);
         }
 
-        private bool IsDownOnOverridePosition(ref Message m, Point pos, int clientHeight, int clientWidth)
+        private bool IsDownOnOverridePosition(ref Message m, Point pos, int clientWidth, int clientHeight)
         {
             if (IsOnTheTop(pos))
             {
@@ -60,7 +61,7 @@ namespace TheCover
                     m.Result = (IntPtr)HTTOPLEFT;
                     return true;
                 }
-                else if (IsOnTheRight(pos, clientHeight))
+                else if (IsOnTheRight(pos, clientWidth))
                 {
                     m.Result = (IntPtr)HTTOPRIGHT;
                     return true;
@@ -97,6 +98,11 @@ namespace TheCover
             else if (IsOnTheRight(pos, clientWidth))
             {
                 m.Result = (IntPtr)HTRIGHT;
+                return true;
+            }
+            else if (pos.X <= clientWidth && pos.Y <= clientHeight)
+            {
+                m.Result = (IntPtr) HTCAPTION;
                 return true;
             }
             return false;
