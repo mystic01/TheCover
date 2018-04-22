@@ -13,6 +13,10 @@ namespace TheCover.Tests
         [TestCase(97, 97, Form_Main.HTBOTTOMRIGHT, TestName = "WndProcTest_MouseDownOnBottomRight_ReturnHTBOTTOMRIGHT")]
         [TestCase(97, 3, Form_Main.HTTOPRIGHT, TestName = "WndProcTest_MouseDownOnTopRight_ReturnHTTOPRIGHT")]
         [TestCase(3, 97, Form_Main.HTBOTTOMLEFT, TestName = "WndProcTest_MouseDownOnBottomLeft_ReturnHTBOTTOMLEFT")]
+        [TestCase(50, 3, Form_Main.HTTOP, TestName = "WndProcTest_MouseDownOnTop_ReturnHTTOP")]
+        [TestCase(50, 97, Form_Main.HTBOTTOM, TestName = "WndProcTest_MouseDownOnBottom_ReturnHTBOTTOM")]
+        [TestCase(3, 50, Form_Main.HTLEFT, TestName = "WndProcTest_MouseDownOnLeft_ReturnHTLEFT")]
+        [TestCase(97, 50, Form_Main.HTRIGHT, TestName = "WndProcTest_MouseDownOnRight_ReturnHTRIGHT")]
         public void WndProcTest_WhenTheMouseDownOnSomewhere_Return_HT(int xPoint, int yPoint,
             int assertResult)
         {
