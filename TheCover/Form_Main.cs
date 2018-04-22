@@ -20,7 +20,7 @@ namespace TheCover
         public static readonly int WM_NCHITTEST = 0x84;
         public const int HTTOPLEFT = 13;
         public const int HTTOPRIGHT = 14;
-        public const int HTBOTTOMLEFT= 16;
+        public const int HTBOTTOMLEFT = 16;
         public const int HTBOTTOMRIGHT = 17;
 
         protected override void OnPaint(PaintEventArgs e)
@@ -49,6 +49,16 @@ namespace TheCover
                 else if (pos.X >= clientWidth - cGrip && pos.Y >= clientHeight - cGrip)
                 {
                     m.Result = (IntPtr)HTBOTTOMRIGHT;
+                    return;
+                }
+                else if (pos.X >= clientWidth - cGrip && pos.Y <= cGrip)
+                {
+                    m.Result = (IntPtr)HTTOPRIGHT;
+                    return;
+                }
+                else if (pos.X <= cGrip && pos.Y >= clientHeight - cGrip)
+                {
+                    m.Result = (IntPtr)HTBOTTOMLEFT;
                     return;
                 }
             }
