@@ -18,6 +18,7 @@ namespace TheCover
         private const int cCaption = 32;   // Caption bar height;
 
         public static readonly int WM_NCHITTEST = 0x84;
+        public static readonly int HTTOPLEFT = 13;
         public static readonly int HTBOTTOMRIGHT = 17;
 
         protected override void OnPaint(PaintEventArgs e)
@@ -30,13 +31,13 @@ namespace TheCover
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x84)
-            {  // Trap WM_NCHITTEST
+            if (m.Msg == WM_NCHITTEST)
+            {
                 var pos = new Point(m.LParam.ToInt32());
                 pos = this.PointToClient(pos);
                 if (pos.X <= cGrip && pos.Y <= cGrip)
                 {
-                    m.Result = (IntPtr)17;
+                    m.Result = (IntPtr) HTTOPLEFT;
                     return;
                 }
                 //if (pos.Y < cCaption)

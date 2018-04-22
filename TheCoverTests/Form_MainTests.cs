@@ -8,7 +8,7 @@ namespace TheCover.Tests
     public class Form_MainTests
     {
         [TestMethod()]
-        public void WndProcTest_WhenTheMouseDownOnTheLeftTopCorner_Return_HTBOTTOMRIGHT()
+        public void WndProcTest_WhenTheMouseDownOnTheLeftTopCorner_Return_HTTOPLEFT()
         {
             var target = new Form_MainStub();
             target.StartPosition = FormStartPosition.Manual;
@@ -23,7 +23,7 @@ namespace TheCover.Tests
 
             target.WncProcForUnitTest(ref mouseMsg);
 
-            Assert.AreEqual(Form_Main.HTBOTTOMRIGHT, (int)mouseMsg.Result);
+            Assert.AreEqual(Form_Main.HTTOPLEFT, (int)mouseMsg.Result);
         }
     }
 
