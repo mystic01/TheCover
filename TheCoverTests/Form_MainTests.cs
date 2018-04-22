@@ -1,48 +1,32 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace TheCover.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class Form_MainTests
     {
-        [TestMethod()]
-        public void WndProcTest_WhenTheMouseDownOnTheLeftTopCorner_Return_HTTOPLEFT()
+        [Test]
+        [TestCase(3, 3, Form_Main.HTTOPLEFT, TestName = "WndProcTest_MouseDownOnTopLeft_ReturnHTTOPLEFT")]
+        [TestCase(97, 97, Form_Main.HTBOTTOMRIGHT, TestName = "WndProcTest_MouseDownOnBottomRight_ReturnHTBOTTOMRIGHT")]
+        public void WndProcTest_WhenTheMouseDownOnSomewhere_Return_HT(int xPoint, int yPoint,
+            int assertResult)
         {
             var target = new Form_MainStub();
+            target.ClientSize = new Size(100, 100);
             target.StartPosition = FormStartPosition.Manual;
-            var xPoint = 3;
-            var yPoint = 3;
             var mouseMsg = new Message
             {
                 Msg = Form_Main.WM_NCHITTEST,
-                LParam = (IntPtr)(xPoint | (yPoint << 16)),
+                LParam = (IntPtr) (xPoint | (yPoint << 16)),
             };
             mouseMsg.Msg = Form_Main.WM_NCHITTEST;
 
             target.WncProcForUnitTest(ref mouseMsg);
 
-            Assert.AreEqual(Form_Main.HTTOPLEFT, (int)mouseMsg.Result);
-        }
-
-        [TestMethod()]
-        public void WndProcTest_WhenTheMouseDownOnTheRightBottomCorner_Return_HTBOTTOMRIGHT()
-        {
-            var target = new Form_MainStub();
-            target.StartPosition = FormStartPosition.Manual;
-            var xPoint = target.Width - 3;
-            var yPoint = target.Height - 3;
-            var mouseMsg = new Message
-            {
-                Msg = Form_Main.WM_NCHITTEST,
-                LParam = (IntPtr)(xPoint | (yPoint << 16)),
-            };
-            mouseMsg.Msg = Form_Main.WM_NCHITTEST;
-
-            target.WncProcForUnitTest(ref mouseMsg);
-
-            Assert.AreEqual(Form_Main.HTBOTTOMRIGHT, (int)mouseMsg.Result);
+            Assert.AreEqual(assertResult, (int) mouseMsg.Result);
         }
     }
 
