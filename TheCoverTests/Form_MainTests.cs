@@ -7,26 +7,23 @@ namespace TheCover.Tests
     [TestClass()]
     public class Form_MainTests
     {
-        public const int WM_NCHITTEST = 0x84;
-        public const int HTBOTTOMRIGHT = 17;
-
         [TestMethod()]
         public void WndProcTest_WhenTheMouseDownOnTheLeftTopCorner_Return_HTBOTTOMRIGHT()
         {
             var target = new Form_MainStub();
+            target.StartPosition = FormStartPosition.Manual;
             var xPoint = 3;
             var yPoint = 3;
             var mouseMsg = new Message
             {
-                Msg = WM_NCHITTEST,
-                LParam = (IntPtr)((xPoint << 32) | yPoint),
+                Msg = Form_Main.WM_NCHITTEST,
+                LParam = (IntPtr)((xPoint << 16) | yPoint),
             };
-            mouseMsg.Msg = WM_NCHITTEST;
+            mouseMsg.Msg = Form_Main.WM_NCHITTEST;
 
             target.WncProcForUnitTest(ref mouseMsg);
 
-
-            Assert.AreEqual(HTBOTTOMRIGHT, mouseMsg.Result);
+            Assert.AreEqual(Form_Main.HTBOTTOMRIGHT, (int)mouseMsg.Result);
         }
     }
 

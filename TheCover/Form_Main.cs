@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TheCover
@@ -19,8 +13,12 @@ namespace TheCover
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
+
         private const int cGrip = 12;      // Grip size
         private const int cCaption = 32;   // Caption bar height;
+
+        public static readonly int WM_NCHITTEST = 0x84;
+        public static readonly int HTBOTTOMRIGHT = 17;
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -36,19 +34,24 @@ namespace TheCover
             {  // Trap WM_NCHITTEST
                 var pos = new Point(m.LParam.ToInt32());
                 pos = this.PointToClient(pos);
-                if (pos.Y < cCaption)
+                if (pos.X <= cGrip && pos.Y <= cGrip)
                 {
-                    m.Result = (IntPtr)2;  // HTCAPTION
+                    m.Result = (IntPtr)17;
                     return;
                 }
-                if ((pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
-                    || (pos.X <= cGrip && pos.Y >= this.ClientSize.Height - cGrip)
-                    || (pos.X <= cGrip && pos.Y <= cGrip)
-                    || (pos.X >= this.ClientSize.Width - cGrip && pos.Y <= cGrip))
-                {
-                    m.Result = (IntPtr)17; // HTBOTTOMRIGHT
-                    return;
-                }
+                //if (pos.Y < cCaption)
+                //{
+                //    m.Result = (IntPtr)2;  // HTCAPTION
+                //    return;
+                //}
+                //if ((pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
+                //    || (pos.X <= cGrip && pos.Y >= this.ClientSize.Height - cGrip)
+                //    || (pos.X <= cGrip && pos.Y <= cGrip)
+                //    || (pos.X >= this.ClientSize.Width - cGrip && pos.Y <= cGrip))
+                //{
+                //    m.Result = (IntPtr)17; // HTBOTTOMRIGHT
+                //    return;
+                //}
             }
             base.WndProc(ref m);
         }
