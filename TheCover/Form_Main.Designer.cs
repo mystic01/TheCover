@@ -28,7 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.contextMenuStrip_Main = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip_Main.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // contextMenuStrip_Main
+            // 
+            this.contextMenuStrip_Main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip_Main.Name = "contextMenuStrip_Main";
+            this.contextMenuStrip_Main.Size = new System.Drawing.Size(95, 26);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // Form_Main
             // 
@@ -44,11 +61,16 @@
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_Main_FormClosed);
             this.Load += new System.EventHandler(this.Form_Main_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_Main_MouseDown);
+            this.contextMenuStrip_Main.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_Main;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

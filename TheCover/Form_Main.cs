@@ -18,6 +18,7 @@ namespace TheCover
         private const int cCaption = 32;   // Caption bar height;
 
         public static readonly int WM_NCHITTEST = 0x84;
+        public static readonly int WM_LBUTTONDOWN = 0x0201;
         public const int HTCAPTION = 2;
         public const int HTLEFT = 10;
         public const int HTRIGHT = 11;
@@ -92,11 +93,6 @@ namespace TheCover
                 m.Result = (IntPtr)HTRIGHT;
                 return true;
             }
-            else if (pos.X <= clientWidth && pos.Y <= clientHeight)
-            {
-                m.Result = (IntPtr)HTCAPTION;
-                return true;
-            }
             return false;
         }
 
@@ -122,8 +118,14 @@ namespace TheCover
 
         private readonly SetupIniIP _setupIni = new SetupIniIP();
         private readonly string _setupIniName = "setting.ini";
+        private ContextMenu _contextMenu = new ContextMenu();
 
         private void Form_Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SaveToIniFile();
+        }
+
+        private void SaveToIniFile()
         {
             _setupIni.IniWriteValue("Position", "Top", Top.ToString(), _setupIniName);
             _setupIni.IniWriteValue("Position", "Left", Left.ToString(), _setupIniName);
@@ -132,6 +134,20 @@ namespace TheCover
         }
 
         private void Form_Main_Load(object sender, EventArgs e)
+        {
+            SetupByIniFile();
+
+            var exitMenuItem = _contextMenu.MenuItems.Add("Exit");
+            exitMenuItem.Click += ExitMenuItem_Click;
+            ContextMenu = _contextMenu;
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void SetupByIniFile()
         {
             var positionTop = _setupIni.IniReadValue("Position", "Top", _setupIniName);
             var positionLeft = _setupIni.IniReadValue("Position", "Left", _setupIniName);
@@ -147,6 +163,24 @@ namespace TheCover
             catch (Exception)
             {
                 // ignored
+            }
+        }
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void Form_Main_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
     }
