@@ -28,14 +28,6 @@ namespace TheCover
         public const int HTBOTTOMLEFT = 16;
         public const int HTBOTTOMRIGHT = 17;
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            //var rc = new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
-            //ControlPaint.DrawSizeGrip(e.Graphics, this.BackColor, rc);
-            //rc = new Rectangle(0, 0, this.ClientSize.Width, cCaption);
-            //e.Graphics.FillRectangle(Brushes.DarkBlue, rc);
-        }
-
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == WM_NCHITTEST)
@@ -102,7 +94,7 @@ namespace TheCover
             }
             else if (pos.X <= clientWidth && pos.Y <= clientHeight)
             {
-                m.Result = (IntPtr) HTCAPTION;
+                m.Result = (IntPtr)HTCAPTION;
                 return true;
             }
             return false;
@@ -126,6 +118,36 @@ namespace TheCover
         private static bool IsOnTheLeft(Point pos)
         {
             return pos.X <= cGrip;
+        }
+
+        private readonly SetupIniIP _setupIni = new SetupIniIP();
+        private readonly string _setupIniName = "setting.ini";
+
+        private void Form_Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _setupIni.IniWriteValue("Position", "Top", Top.ToString(), _setupIniName);
+            _setupIni.IniWriteValue("Position", "Left", Left.ToString(), _setupIniName);
+            _setupIni.IniWriteValue("Size", "Width", ClientSize.Width.ToString(), _setupIniName);
+            _setupIni.IniWriteValue("Size", "Height", ClientSize.Height.ToString(), _setupIniName);
+        }
+
+        private void Form_Main_Load(object sender, EventArgs e)
+        {
+            var positionTop = _setupIni.IniReadValue("Position", "Top", _setupIniName);
+            var positionLeft = _setupIni.IniReadValue("Position", "Left", _setupIniName);
+            var sizeWidth = _setupIni.IniReadValue("Size", "Width", _setupIniName);
+            var sizeHeight = _setupIni.IniReadValue("Size", "Height", _setupIniName);
+
+            try
+            {
+                Top = int.Parse(positionTop);
+                Left = int.Parse(positionLeft);
+                ClientSize = new Size(int.Parse(sizeWidth), int.Parse(sizeHeight));
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
     }
 }
